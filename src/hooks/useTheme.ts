@@ -15,29 +15,45 @@ export function useTheme() {
       return appStore.theme === 'dark'
   })
 
-  const theme = computed(() => {
-    return isDark.value ? darkTheme : undefined
-  })
+  // const theme = computed(() => {
+  //   return isDark.value ? darkTheme : undefined
+  // })
 
-  const themeOverrides = computed<GlobalThemeOverrides>(() => {
-    if (isDark.value) {
-      return {
-        common: {},
-      }
-    }
-    return {}
-  })
+  const theme = computed(() => undefined)
+
+  // const themeOverrides = computed<GlobalThemeOverrides>(() => {
+  //   if (isDark.value) {
+  //     return {
+  //       common: {},
+  //     }
+  //   }
+  //   return {}
+  // })
+
+  const themeOverrides = computed(() => ({}))
+
+  //   watch(
+  //     () => isDark.value,
+  //     (dark) => {
+  //       if (dark)
+  //         document.documentElement.classList.add('dark')
+  //       else
+  //         document.documentElement.classList.remove('dark')
+  //     },
+  //     { immediate: true },
+  //   )
+
+  //   return { theme, themeOverrides }
+  // }
 
   watch(
-    () => isDark.value,
-    (dark) => {
-      if (dark)
-        document.documentElement.classList.add('dark')
-      else
-        document.documentElement.classList.remove('dark')
+    () => OsTheme.value,
+    () => {
+      document.documentElement.classList.remove('dark')
     },
     { immediate: true },
   )
 
+  // 返回theme和themeOverrides，这样不会影响使用这些值的其他代码
   return { theme, themeOverrides }
 }
